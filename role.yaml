@@ -55,3 +55,29 @@ roleRef:
   name: roboshop-lead  # this must match the name of the Role or ClusterRole you wish to bind to
   apiGroup: rbac.authorization.k8s.io
 
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  namespace: roboshop
+  name: roboshop-cluster-role
+rules:
+- apiGroups: ["*"] # "" indicates the core API group
+  resources: ["persistentvolumes"]  # nouns
+  verbs: ["get","list","watch"] #Actions
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: roboshop-cluster
+  namespace: roboshop
+subjects:
+# You can specify more than one "subject"
+- kind: user
+  name: suresh # "name" is case sensitive
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: ClusterRole #this must be Role or ClusterRole
+  name: roboshop-cluster  # this must match the name of the Role or ClusterRole you wish to bind to
+  apiGroup: rbac.authorization.k8s.io
